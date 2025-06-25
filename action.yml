@@ -1,0 +1,48 @@
+---
+name: "Changebot Deployment Notifier"
+description: "Notify Changebot of deployments with automatic retry logic and comprehensive error handling"
+author: "Changebot"
+branding:
+  icon: "bell"
+  color: "blue"
+inputs:
+  environment:
+    description: "Deployment environment"
+    required: false
+    default: "production"
+  endpoint:
+    description: "API endpoint URL (for testing only)"
+    required: false
+    default: "https://app.changebot.ai/api/v1/deployments"
+runs:
+  using: "composite"
+  steps:
+    - name: Get OIDC Token
+      id: oidc
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const token = await core.getIDToken('changebot.ai');
+          core.setSecret(token);
+          core.setOutput('token', token);
+
+    - name: Notify Changebot
+      shell: bash
+      run: |
+        URL="${{ inputs.endpoint }}?sha=${{ github.sha }}&environment=${{ inputs.environment }}&repository_id=${{ github.repository_id }}"
+
+        attempt=1
+        while [ $attempt -le 3 ]; do
+          if curl -f --max-time 30 \
+            -H "Authorization: Bearer ${{ steps.oidc.outputs.token }}" \
+            -H "Content-Type: application/json" \
+            "$URL"; then
+            echo "✅ Deployment notification sent successfully"
+            exit 0
+          fi
+          [ $attempt -lt 3 ] && sleep $((attempt * 2 + RANDOM % 3))
+          ((attempt++))
+        done
+
+        echo "❌ Failed to send deployment notification after 3 attempts"
+        exit 1
