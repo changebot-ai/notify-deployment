@@ -16,7 +16,7 @@ permissions:
 **Step 2**: Add the action to your workflow:
 
 ```yaml
-- uses: changebot-inc/notify-deployment@v1
+- uses: changebot-ai/notify-deployment@1.0.0-alpha
 ```
 
 ## Usage
@@ -43,13 +43,13 @@ jobs:
         run: echo "Deploying application..."
 
       - name: Notify Changebot
-        uses: changebot-inc/notify-deployment@v1
+        uses: changebot-ai/notify-deployment@1.0.0-alpha
 ```
 
 ### Staging Environment
 
 ```yaml
-- uses: changebot-inc/notify-deployment@v1
+- uses: changebot-ai/notify-deployment@1.0.0-alpha
   with:
     environment: "staging"
 ```
@@ -84,4 +84,4 @@ Uses GitHub's OIDC to authenticate with Changebot without API keys:
 
 ## Support
 
-🐛 **Issues**: [GitHub Issues](https://github.com/changebot-ai/notify-deployment-action/issues)
+🐛 **Issues**: [GitHub Issues](https://github.com/changebot-ai/notify-deployment/issues)
