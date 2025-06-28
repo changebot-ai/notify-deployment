@@ -11,6 +11,7 @@ Changebot is a product enablement automation platform that automatically generat
 ```yaml
 permissions:
   id-token: write
+  contents: read
 ```
 
 **Step 2**: Add the action to your workflow:
@@ -35,6 +36,7 @@ jobs:
 
     permissions:
       id-token: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
