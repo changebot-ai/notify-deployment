@@ -17,7 +17,7 @@ permissions:
 **Step 2**: Add the action to your workflow:
 
 ```yaml
-- uses: changebot-ai/notify-deployment@1.0.0-alpha
+- uses: changebot-ai/notify-deployment@1.0.0
 ```
 
 ## Usage
@@ -51,7 +51,7 @@ jobs:
 ### Staging Environment
 
 ```yaml
-- uses: changebot-ai/notify-deployment@1.0.0-alpha
+- uses: changebot-ai/notify-deployment@1.0.0
   with:
     environment: "staging"
 ```
