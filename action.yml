@@ -3,7 +3,7 @@ name: "Changebot Deployment Notifier"
 description: "Notify Changebot of deployments"
 author: "Changebot"
 branding:
-  icon: "rocket"
+  icon: "bell"
   color: "green"
 inputs:
   environment:
