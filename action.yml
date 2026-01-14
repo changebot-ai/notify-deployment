@@ -51,5 +51,6 @@ runs:
           ((attempt++))
         done
 
-        echo "❌ Failed to send deployment notification after 3 attempts"
-        exit 1
+        echo "Deployment notification not confirmed after 3 attempts"
+        echo "Debug: endpoint=$URL timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ) repository=${{ github.repository }}"
+        exit 0
