@@ -17,7 +17,7 @@ permissions:
 **Step 2**: Add the action to your workflow:
 
 ```yaml
-- uses: changebot-ai/notify-deployment@1.0.0
+- uses: changebot-ai/notify-deployment@v1
 ```
 
 ## Usage
@@ -45,13 +45,13 @@ jobs:
         run: echo "Deploying application..."
 
       - name: Notify Changebot
-        uses: changebot-ai/notify-deployment@1.0.0-alpha
+        uses: changebot-ai/notify-deployment@v1
 ```
 
 ### Staging Environment
 
 ```yaml
-- uses: changebot-ai/notify-deployment@1.0.0
+- uses: changebot-ai/notify-deployment@v1
   with:
     environment: "staging"
 ```
