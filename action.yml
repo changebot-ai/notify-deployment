@@ -37,13 +37,16 @@ runs:
           '{sha: $sha, environment: $env, repository_id: $repo_id}')
 
         attempt=1
+        last_http_code=""
         while [ $attempt -le 3 ]; do
-          if curl -f --max-time 30 \
+          http_code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
             -X POST \
             -H "Authorization: Bearer ${{ steps.oidc.outputs.token }}" \
             -H "Content-Type: application/json" \
             --data "$PAYLOAD" \
-            "$URL"; then
+            "$URL")
+          last_http_code="$http_code"
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
             echo "✅ Deployment notification sent successfully"
             exit 0
           fi
@@ -52,5 +55,5 @@ runs:
         done
 
         echo "Deployment notification not confirmed after 3 attempts"
-        echo "Debug: endpoint=$URL timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ) repository=${{ github.repository }}"
+        echo "Debug: endpoint=$URL http_code=$last_http_code run_id=${{ github.run_id }} timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ) repository=${{ github.repository }}"
         exit 0
